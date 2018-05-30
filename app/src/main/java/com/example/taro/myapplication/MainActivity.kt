@@ -19,6 +19,15 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        listview = findViewById<View>(R.id.listview) as ListView
+        list = ArrayList()
+
+        val fields = R.raw::class.java!!.getFields()
+        for(i in fields.indices){
+            list.add(fields[i].getName())
+        }
         }
     }
 }
