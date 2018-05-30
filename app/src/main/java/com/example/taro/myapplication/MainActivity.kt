@@ -28,6 +28,16 @@ class MainActivity : AppCompatActivity() {
         for(i in fields.indices){
             list.add(fields[i].getName())
         }
+        adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, list)
+        listview.adapter = adapter
+
+        listview.onItemClickListener = AdapterView.OnItemClickListener{AdapterView, view,i,l ->
+            if(mediaPlayer != null){
+                mediaPlayer!!.release()
+            }
+            val singh = resources.getIdentifier(list[i], "raw", packageName)
+            mediaPlayer = MediaPlayer.create(this, singh)
+            mediaPlayer!!.start()
         }
     }
 }
