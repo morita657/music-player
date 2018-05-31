@@ -53,4 +53,9 @@ class MainActivity : AppCompatActivity() {
             mediaPlayer!!.start()
         }
     }
+    fun stop(view: View){
+        val myToast = Toast.makeText(this, "Stop!!", Toast.LENGTH_SHORT)
+        myToast.show()
+        mediaPlayer!!.stop()
+    }
 }
