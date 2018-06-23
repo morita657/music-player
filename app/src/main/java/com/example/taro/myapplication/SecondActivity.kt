@@ -16,10 +16,10 @@ class SecondActivity : AppCompatActivity() {
         setContentView(R.layout.activity_second)
     }
     companion object {
-        const val TOTAL_COUNT = "total_count"
+        const val SONG_ID = "song_id"
     }
     fun play(view: View){
-        val signh = intent.getIntExtra(TOTAL_COUNT,0)
+        val signh = intent.getIntExtra(SONG_ID,0)
         mediaPlayer = MediaPlayer.create(this, signh)
         mediaPlayer!!.start()
 

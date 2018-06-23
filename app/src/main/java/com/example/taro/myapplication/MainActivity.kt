@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity() {
 //            Get id of resource
             val singh = resources.getIdentifier(list[i], "raw", packageName)
             val intent = Intent(this, SecondActivity::class.java)
-            intent.putExtra(SecondActivity.TOTAL_COUNT, singh)
+            intent.putExtra(SecondActivity.SONG_ID, singh)
             startActivity(intent)
         }
     }
