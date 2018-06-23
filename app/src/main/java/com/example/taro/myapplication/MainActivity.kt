@@ -67,11 +67,4 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
-    fun stop(view: View){
-        val myToast = Toast.makeText(this, "Stop!!", Toast.LENGTH_SHORT)
-//     Pop up "Stop!!" message
-        myToast.show()
-//     Release unnecessary memory and instances of codecs being held
-        mediaPlayer!!.release()
-    }
 }
