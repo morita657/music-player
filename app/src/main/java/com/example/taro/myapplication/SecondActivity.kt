@@ -10,6 +10,7 @@ class SecondActivity : AppCompatActivity() {
     //    MediaPlayer is used to control audio files and streams, public class
 //    ? mark is to allow to pass null value
     internal var mediaPlayer: MediaPlayer ?= null
+    var mValue: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,5 +30,13 @@ class SecondActivity : AppCompatActivity() {
 //     Pop up "Stop!!" message
         myToast.show()
         mediaPlayer!!.release()
+    }
+    fun fastfoward(view:View){
+        mValue += 30; //change this value to control how much to forward
+        mediaPlayer!!.seekTo(mediaPlayer!!.currentPosition+mValue)
+    }
+    fun backward(view: View){
+        mValue -= 30; //change this value to control how much to forward
+        mediaPlayer!!.seekTo(mediaPlayer!!.currentPosition+mValue)
     }
 }
