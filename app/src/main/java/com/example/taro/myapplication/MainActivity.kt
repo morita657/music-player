@@ -1,13 +1,22 @@
 package com.example.taro.myapplication
 
+import android.content.Intent
 import android.media.MediaPlayer
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 import android.widget.ArrayAdapter
+import android.app.Activity
+import android.support.v4.content.ContextCompat.startActivity
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemClickListener
+import com.example.taro.myapplication.R.id.listview
+
+
 
 
 
@@ -53,9 +62,9 @@ class MainActivity : AppCompatActivity() {
             }
 //            Get id of resource
             val singh = resources.getIdentifier(list[i], "raw", packageName)
-//            Create a MediaPlayer for a given resource id.
-            mediaPlayer = MediaPlayer.create(this, singh)
-            mediaPlayer!!.start()
+            val intent = Intent(this, SecondActivity::class.java)
+            intent.putExtra(SecondActivity.TOTAL_COUNT, singh)
+            startActivity(intent)
         }
     }
     fun stop(view: View){
