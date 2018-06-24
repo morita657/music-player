@@ -15,16 +15,14 @@ import android.media.MediaPlayer.OnPreparedListener
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_second.*
 import android.os.Handler
-
+import java.util.concurrent.TimeUnit
 class SecondActivity : AppCompatActivity(),OnSeekBarChangeListener{
     internal var mediaPlayer: MediaPlayer ?= null
     internal var mValue: Int = 0
-    internal var progressView: TextView? = null
     internal var seekbarStatusView: TextView? = null
     internal var seekbarView: SeekBar ?= null
     internal var runnable: Runnable ?= null
     private val handler = Handler()
-    internal lateinit var seekbarGage: SeekBar
 
 
 
@@ -33,10 +31,12 @@ class SecondActivity : AppCompatActivity(),OnSeekBarChangeListener{
         setContentView(R.layout.activity_second)
 
         val signh = intent.getIntExtra(SONG_ID,0)
+        val name = intent.getStringExtra(SONG_NAME)
+        val title = findViewById<View>(R.id.textView) as TextView
+        title.setText(name)
         mediaPlayer = MediaPlayer.create(this, signh)
-        progressView = this.progress
-        seekbarStatusView = this.seekbarStatus
         seekbarView = this.seekbar
+
         seekbarView!!.setOnSeekBarChangeListener(this)
         mediaPlayer!!.setOnPreparedListener(object: MediaPlayer.OnPreparedListener{
             override fun onPrepared(mp: MediaPlayer?) {
@@ -48,12 +48,29 @@ class SecondActivity : AppCompatActivity(),OnSeekBarChangeListener{
         })
     }
     override fun onProgressChanged(seekBar: SeekBar, progress: Int,fromUser: Boolean) {
+        if(mediaPlayer!!.isPlaying()){
             mediaPlayer!!.seekTo(progress)
+        }
     }
     fun playCycle(){
             runnable = object : Runnable {
                 override fun run() {
                     seekbarView!!.setProgress(mediaPlayer!!.currentPosition)
+
+                    val duration = findViewById<View>(R.id.textView2) as TextView
+                    val current:Long = mediaPlayer!!.currentPosition.toLong()
+                    val result = String.format("%02d:%02d",
+                            TimeUnit.MILLISECONDS.toMinutes(current) -
+                                    TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(current)), // The change is in this line
+                            TimeUnit.MILLISECONDS.toSeconds(current) -
+                                    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(current)))
+                    val fullTime = mediaPlayer!!.getDuration().toLong()
+                    val total = String.format("%02d:%02d",
+                            TimeUnit.MILLISECONDS.toMinutes(fullTime) -
+                                    TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(fullTime)), // The change is in this line
+                            TimeUnit.MILLISECONDS.toSeconds(fullTime) -
+                                    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(fullTime)))
+                    duration.setText(result + " /" + total)
                     playCycle()
                 }
             }
@@ -71,15 +88,20 @@ class SecondActivity : AppCompatActivity(),OnSeekBarChangeListener{
 
     companion object {
         const val SONG_ID = "song_id"
+        const val SONG_NAME="none"
     }
-    fun play(view: View){
-//        val currentProgress = mediaPlayer!!.currentPosition
+    fun toggle(view: View){
+        if(mediaPlayer!!.isPlaying()){
+            stop()
+        }
+        play()
+    }
+    fun play(){
         mediaPlayer!!.start()
         handler.post(runnable)
     }
-    fun stop(view: View){
+    fun stop(){
         val myToast = Toast.makeText(this, "Stop!!", Toast.LENGTH_SHORT)
-//     Pop up "Stop!!" message
         myToast.show()
         mediaPlayer!!.pause()
     }
@@ -91,4 +113,5 @@ class SecondActivity : AppCompatActivity(),OnSeekBarChangeListener{
         mValue -= 30; //change this value to control how much to backward
         mediaPlayer!!.seekTo(mediaPlayer!!.currentPosition+mValue)
     }
+
 }
