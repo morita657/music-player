@@ -62,8 +62,10 @@ class MainActivity : AppCompatActivity() {
             }
 //            Get id of resource
             val singh = resources.getIdentifier(list[i], "raw", packageName)
+            var songName = fields[i].getName()
             val intent = Intent(this, SecondActivity::class.java)
             intent.putExtra(SecondActivity.SONG_ID, singh)
+            intent.putExtra(SecondActivity.SONG_NAME, songName)
             startActivity(intent)
         }
     }
