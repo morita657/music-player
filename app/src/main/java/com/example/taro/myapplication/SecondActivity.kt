@@ -59,18 +59,10 @@ class SecondActivity : AppCompatActivity(),OnSeekBarChangeListener{
 
                     val duration = findViewById<View>(R.id.textView2) as TextView
                     val current:Long = mediaPlayer!!.currentPosition.toLong()
-                    val result = String.format("%02d:%02d",
-                            TimeUnit.MILLISECONDS.toMinutes(current) -
-                                    TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(current)), // The change is in this line
-                            TimeUnit.MILLISECONDS.toSeconds(current) -
-                                    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(current)))
+                    val result = computeDuration(current)
                     val fullTime = mediaPlayer!!.getDuration().toLong()
-                    val total = String.format("%02d:%02d",
-                            TimeUnit.MILLISECONDS.toMinutes(fullTime) -
-                                    TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(fullTime)), // The change is in this line
-                            TimeUnit.MILLISECONDS.toSeconds(fullTime) -
-                                    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(fullTime)))
-                    duration.setText(result + " /" + total)
+                    val total =computeDuration(fullTime)
+                    duration.setText(result + " / " + total)
                     playCycle()
                 }
             }
@@ -114,4 +106,11 @@ class SecondActivity : AppCompatActivity(),OnSeekBarChangeListener{
         mediaPlayer!!.seekTo(mediaPlayer!!.currentPosition+mValue)
     }
 
+    fun computeDuration(duration:Long):String{
+        return String.format("%02d:%02d",
+                TimeUnit.MILLISECONDS.toMinutes(duration) -
+                        TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(duration)), // The change is in this line
+                TimeUnit.MILLISECONDS.toSeconds(duration) -
+                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(duration)))
+    }
 }
