@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         for (file in files) {
                 if (file.getName().endsWith(".mp3")) {
                 list.add(file.getAbsolutePath())
-                nameList.add(file.getName().toString())
+                nameList.add(file.getName().toString().replace(".mp3", ""))
             }
         }
         //    ArrayAdapter provides views for an ArrayView
