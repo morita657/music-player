@@ -11,24 +11,33 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 import android.widget.ArrayAdapter
 import android.app.Activity
+import android.media.AudioAttributes
+import android.media.AudioManager
+import android.media.RingtoneManager
+import android.net.Uri
+import android.os.Build
+import android.os.Environment
+import android.provider.MediaStore
 import android.support.v4.content.ContextCompat.startActivity
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemClickListener
 import com.example.taro.myapplication.R.id.listview
-
-
-
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
 
 
 class MainActivity : AppCompatActivity() {
 //lateinit works to define object later
     internal lateinit var listview: ListView
     internal lateinit var list:MutableList<String>
+    internal lateinit var durationList:MutableList<String>
 //    ListAdapter is used to customze list view layout
     internal lateinit var adapter:ListAdapter
 //    MediaPlayer is used to control audio files and streams, public class
 //    ? mark is to allow to pass null value
     internal var mediaPlayer: MediaPlayer ?= null
+
 //    Override is one of the method for class and inheritance.
 //    If we want to override function, we require the explicit annotations like below
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +52,7 @@ class MainActivity : AppCompatActivity() {
 //    Get the ListView
         listview = findViewById<View>(R.id.listview) as ListView
         list = ArrayList()
+        durationList = ArrayList()
 //    runtime is the state when the program gets running
 //    ::class.java gives you the Java Class<?>
 
@@ -51,6 +61,10 @@ class MainActivity : AppCompatActivity() {
         val fields = R.raw::class.java!!.getFields()
         for(i in fields.indices){
             list.add(fields[i].getName())
+//            val singh = resources.getIdentifier(fields[i].getName(), "raw", packageName)
+//            mediaPlayer = MediaPlayer.create(this, singh)
+//            durationList.add(mediaPlayer!!.duration.toString())
+
         }
 //    ArrayAdapter provides views for an ArrayView
         adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, list)
@@ -67,6 +81,13 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra(SecondActivity.SONG_ID, singh)
             intent.putExtra(SecondActivity.SONG_NAME, songName)
             startActivity(intent)
+        }
+
+        val btn = findViewById<View>(R.id.button2) as Button
+        btn.setOnClickListener{
+            val path = Uri.parse(Environment.getExternalStorageDirectory().getPath() + "/TestFolder/demo.mp3")
+            val mediaPlayer = MediaPlayer.create(getApplicationContext(), path)
+            mediaPlayer.start()
         }
     }
 }
