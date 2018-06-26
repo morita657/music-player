@@ -4,33 +4,19 @@ import android.content.Intent
 import android.media.MediaPlayer
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.*
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.view.*
 import android.widget.ArrayAdapter
-import android.app.Activity
-import android.media.AudioAttributes
-import android.media.AudioManager
-import android.media.RingtoneManager
-import android.net.Uri
-import android.os.Build
 import android.os.Environment
-import android.provider.MediaStore
-import android.support.v4.content.ContextCompat.startActivity
 import android.widget.AdapterView
-import android.widget.AdapterView.OnItemClickListener
-import com.example.taro.myapplication.R.id.listview
 import java.io.File
-import java.io.FileInputStream
-import java.io.FileOutputStream
 
 
 class MainActivity : AppCompatActivity() {
 //lateinit works to define object later
     internal lateinit var listview: ListView
     internal lateinit var list:MutableList<String>
+    internal lateinit var nameList:MutableList<String>
     internal lateinit var durationList:MutableList<String>
 //    ListAdapter is used to customze list view layout
     internal lateinit var adapter:ListAdapter
@@ -53,41 +39,33 @@ class MainActivity : AppCompatActivity() {
         listview = findViewById<View>(R.id.listview) as ListView
         list = ArrayList()
         durationList = ArrayList()
-//    runtime is the state when the program gets running
-//    ::class.java gives you the Java Class<?>
 
-//    !! is operator, the not-null assertion operator that converts any valu to a non-null type,
-//    and throws an exception if the value is null
-        val fields = R.raw::class.java!!.getFields()
-        for(i in fields.indices){
-            list.add(fields[i].getName())
-//            val singh = resources.getIdentifier(fields[i].getName(), "raw", packageName)
-//            mediaPlayer = MediaPlayer.create(this, singh)
-//            durationList.add(mediaPlayer!!.duration.toString())
-
+    findSongs(Environment.getExternalStorageDirectory().getPath() + "/TestFolder/")
+    }
+    fun findSongs(path:String) {
+        list = ArrayList()
+        nameList = ArrayList()
+        val rootFolder = File(path)
+        var files = rootFolder.listFiles() //here you will get NPE if directory doesn't contains  any file,handle it like this.
+        for (file in files) {
+                if (file.getName().endsWith(".mp3")) {
+                list.add(file.getAbsolutePath())
+                nameList.add(file.getName().toString())
+            }
         }
-//    ArrayAdapter provides views for an ArrayView
-        adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, list)
+        //    ArrayAdapter provides views for an ArrayView
+        adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, nameList)
         listview.adapter = adapter
-//    Invoke callback when an item in the list is clicked
+        //    Invoke callback when an item in the list is clicked
         listview.onItemClickListener = AdapterView.OnItemClickListener{AdapterView, view,i,l ->
             if(mediaPlayer != null){
                 mediaPlayer!!.release()
             }
-//            Get id of resource
-            val singh = resources.getIdentifier(list[i], "raw", packageName)
-            var songName = fields[i].getName()
+            var songName = nameList[i]
             val intent = Intent(this, SecondActivity::class.java)
-            intent.putExtra(SecondActivity.SONG_ID, singh)
+            intent.putExtra(SecondActivity.SONG_ID, list[i])
             intent.putExtra(SecondActivity.SONG_NAME, songName)
             startActivity(intent)
-        }
-
-        val btn = findViewById<View>(R.id.button2) as Button
-        btn.setOnClickListener{
-            val path = Uri.parse(Environment.getExternalStorageDirectory().getPath() + "/TestFolder/demo.mp3")
-            val mediaPlayer = MediaPlayer.create(getApplicationContext(), path)
-            mediaPlayer.start()
         }
     }
 }
