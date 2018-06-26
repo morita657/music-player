@@ -36,7 +36,6 @@ class SecondActivity : AppCompatActivity(),OnSeekBarChangeListener{
         seekbarView = this.seekbar
         seekbarView!!.setMax(mediaPlayer!!.getDuration())
         playCycle()
-        mediaPlayer!!.start()
     }
     override fun onProgressChanged(seekBar: SeekBar, progress: Int,fromUser: Boolean) {
         mediaPlayer!!.seekTo(progress)
@@ -67,30 +66,20 @@ class SecondActivity : AppCompatActivity(),OnSeekBarChangeListener{
         const val SONG_NAME="none"
     }
     fun toggle(view: View){
-        if(mediaPlayer!!.isPlaying){
-            stop()
+        if(!mediaPlayer!!.isPlaying()){
+            mediaPlayer!!.start()
+            handler.post(runnable)
         }
-        mediaPlayer!!.start()
-        play()
-    }
-    fun play(){
-        mediaPlayer!!.start()
-        handler.post(runnable)
-    }
-    fun stop(){
-        if(mediaPlayer!!.isPlaying()){
-            println(mediaPlayer!!.isPlaying())
-            super.onPause()
-            println(mediaPlayer!!.pause())
+        else if(mediaPlayer!!.isPlaying()){
             mediaPlayer!!.pause()
         }
     }
     fun fastfoward(view:View){
-        mValue += 30; //change this value to control how much to forward
+        mValue += 30 //change this value to control how much to forward
         mediaPlayer!!.seekTo(mediaPlayer!!.currentPosition+mValue)
     }
     fun backward(view: View){
-        mValue -= 30; //change this value to control how much to backward
+        mValue -= 30 //change this value to control how much to backward
         mediaPlayer!!.seekTo(mediaPlayer!!.currentPosition+mValue)
     }
 
