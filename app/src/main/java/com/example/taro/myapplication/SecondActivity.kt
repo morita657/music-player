@@ -1,6 +1,5 @@
 package com.example.taro.myapplication
 
-import android.content.Intent
 import android.media.MediaPlayer
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -12,7 +11,6 @@ import java.lang.annotation.RetentionPolicy
 import java.util.concurrent.Executors
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
-import android.media.MediaPlayer.OnPreparedListener
 import android.net.Uri
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_second.*
@@ -21,7 +19,6 @@ import java.util.concurrent.TimeUnit
 class SecondActivity : AppCompatActivity(),OnSeekBarChangeListener{
     internal var mediaPlayer: MediaPlayer ?= null
     internal var mValue: Int = 0
-    internal var seekbarStatusView: TextView? = null
     internal var seekbarView: SeekBar ?= null
     internal var runnable: Runnable ?= null
     private val handler = Handler()
