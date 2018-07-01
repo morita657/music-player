@@ -10,12 +10,12 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="143dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="80dp"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.977"
+        app:layout_constraintVertical_bias="0.981"
         tools:layout_editor_absoluteX="0dp">
 
         <SeekBar
@@ -25,6 +25,13 @@
             android:padding="15dp"
             android:paddingBottom="10dp" />
 
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Button" />
+
     </LinearLayout>
 
 
@@ -32,19 +39,19 @@
         android:id="@+id/button2"
         android:layout_width="47dp"
         android:layout_height="32dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginEnd="70dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="10dp"
         android:background="@drawable/ic_fast_forward"
         android:onClick="fastfoward"
         android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/guideline" />
 
     <Button
         android:id="@+id/button3"
         android:layout_width="47dp"
         android:layout_height="32dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="20dp"
         android:layout_marginStart="70dp"
         android:background="@drawable/ic_fast_rewind"
         android:onClick="backward"
@@ -61,9 +68,9 @@
 
     <ToggleButton
         android:id="@+id/toggle"
-        android:layout_width="58dp"
+        android:layout_width="47dp"
         android:layout_height="32dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="20dp"
         android:layout_marginEnd="10dp"
         android:layout_marginStart="10dp"
         android:background="@drawable/toggle_selector"
@@ -76,7 +83,7 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="186dp"
+        android:layout_width="374dp"
         android:layout_height="40dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
@@ -111,5 +118,45 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="299dp"
+        android:layout_height="305dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginStart="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/peace" />
+
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="64dp"
+        android:layout_marginStart="8dp"
+        android:layout_weight="1"
+        android:text="Auto"
+        android:textColor="#ffffff"
+        android:textSize="20dp"
+        android:onClick="auto"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.027"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!--<ToggleButton-->
+        <!--android:id="@+id/button4"-->
+        <!--android:layout_width="47dp"-->
+        <!--android:layout_height="32dp"-->
+        <!--android:layout_marginBottom="20dp"-->
+        <!--android:layout_marginEnd="10dp"-->
+        <!--android:background="@drawable/ic_autorenew"-->
+        <!--android:textOff="@drawable/ic_autorenew"-->
+        <!--android:textOn=""-->
+        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--app:layout_constraintEnd_toEndOf="parent" />-->
 
 </android.support.constraint.ConstraintLayout>

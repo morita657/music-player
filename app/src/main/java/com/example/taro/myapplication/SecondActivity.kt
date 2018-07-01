@@ -4,17 +4,14 @@ import android.media.MediaPlayer
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import android.support.annotation.IntDef
-import android.widget.ListView
 import java.lang.annotation.RetentionPolicy
 import java.util.concurrent.Executors
-import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import android.net.Uri
-import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_second.*
 import android.os.Handler
+import android.widget.*
 import java.util.concurrent.TimeUnit
 class SecondActivity : AppCompatActivity(),OnSeekBarChangeListener{
     internal var mediaPlayer: MediaPlayer ?= null
@@ -22,6 +19,7 @@ class SecondActivity : AppCompatActivity(),OnSeekBarChangeListener{
     internal var seekbarView: SeekBar ?= null
     internal var runnable: Runnable ?= null
     private val handler = Handler()
+    internal var switchView: Switch?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +34,19 @@ class SecondActivity : AppCompatActivity(),OnSeekBarChangeListener{
         seekbarView = this.seekbar
         seekbarView!!.setMax(mediaPlayer!!.getDuration())
         playCycle()
+
+        switchView = findViewById<View>(R.id.switch1) as Switch
+        switchView!!.setOnClickListener({
+            if(!mediaPlayer!!.isLooping){
+                println(true)
+                mediaPlayer!!.setLooping(true)
+            }
+            else if(mediaPlayer!!.isLooping){
+                println(false)
+                mediaPlayer!!.setLooping(false)
+            }
+        })
+
     }
     override fun onProgressChanged(seekBar: SeekBar, progress: Int,fromUser: Boolean) {
         mediaPlayer!!.seekTo(progress)
@@ -68,19 +79,28 @@ class SecondActivity : AppCompatActivity(),OnSeekBarChangeListener{
     fun toggle(view: View){
         if(!mediaPlayer!!.isPlaying()){
             mediaPlayer!!.start()
-            handler.post(runnable)
+//            handler.post(runnable)
+            if(!mediaPlayer!!.isLooping){
+                mediaPlayer!!.start()
+            }
         }
         else if(mediaPlayer!!.isPlaying()){
             mediaPlayer!!.pause()
         }
     }
+    fun auto(view: View){
+        mediaPlayer!!.setLooping(true)
+        mediaPlayer!!.start()
+    }
     fun fastfoward(view:View){
-        mValue += 30 //change this value to control how much to forward
+        mValue += 30000 //change this value to control how much to forward
         mediaPlayer!!.seekTo(mediaPlayer!!.currentPosition+mValue)
+        mValue = 0
     }
     fun backward(view: View){
-        mValue -= 30 //change this value to control how much to backward
+        mValue -= 30000 //change this value to control how much to backward
         mediaPlayer!!.seekTo(mediaPlayer!!.currentPosition+mValue)
+        mValue = 0
     }
 
     fun computeDuration(duration:Long):String{
