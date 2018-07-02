@@ -1,7 +1,12 @@
-# Simple Android Music - PlayerPolyglottal Project- 
-![service image](screenshot.png)
+# Simple Android Music Player
 ## 1. Overview
 This is one of the solo projects at Code Chrysalis to build service for one week with new language that I have never learnt. This service is allow you to play and pause musics on the list which is stored as default. This music player has fully written with [Kotlin](https://kotlinlang.org/) on [Android Studio](https://developer.android.com/studio/).
+
+
+<p float="left">
+    <img src="Screenshot1.png" alt="list-of-songs" width="420px" />
+    <img src="Screenshot2.png" alt="detail-page" width="420px" />
+</p>
 
 ## 2. Usage
 If you want to experiment and customise, take a look at prerequisite section at first. Then download this repository and open on your text editor.
